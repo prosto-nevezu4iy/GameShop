@@ -1,0 +1,270 @@
+﻿
+@model WebUI.Models.ProductsByCategoryViewModel
+
+@{
+    ViewBag.Title = "List";
+}
+
+@section styles {
+    <link href="https://cdn.jsdelivr.net/npm/@Html.Raw("@")sweetalert2/theme-dark@3/dark.css" rel="stylesheet">
+}
+
+<!-- ========================= SECTION PAGETOP ========================= -->
+
+<section class="section-pagetop bg">
+    <div class="container">
+        <h2 class="title-page">Category products</h2>
+        <nav>
+            <ol class="breadcrumb text-white">
+                <li class="breadcrumb-item">
+                    @Html.ActionLink("Home", "Index", "Home");
+                </li>
+                @if (Model.Category.ParentId != null)
+                {
+                    <li class="breadcrumb-item">
+                        @Html.RouteLink(Model.Category.Parent.Name, "Category", new { alias = Model.Category.Parent.Alias }, null);
+                    </li>
+                }
+                <li class="breadcrumb-item active" aria-current="page">
+                    @Model.Category.Name
+                </li>
+            </ol>
+        </nav>
+    </div> <!-- container //  -->
+</section>
+<!-- ========================= SECTION INTRO END// ========================= -->
+<!-- ========================= SECTION CONTENT ========================= -->
+<section class="section-content padding-y">
+    <div class="container">
+
+        <div class="row">
+            <aside class="col-md-3">
+                <input type="hidden" name="category" value="@Model.Category.Alias" />
+                <div class="card">
+                    <article class="filter-group">
+                        <header class="card-header">
+                            <a href="#" data-toggle="collapse" data-target="#collapse_1" aria-expanded="true" class="">
+                                <i class="icon-control fa fa-chevron-down"></i>
+                                <h6 class="title">Product Name</h6>
+                            </a>
+                        </header>
+                        <div class="filter-content collapse show" id="collapse_1" style="">
+                            <div class="card-body">
+                                <form class="pb-3">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="name" placeholder="Search">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-light" type="button"><i class="fa fa-search"></i></button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div> <!-- card-body.// -->
+                        </div>
+                    </article> <!-- filter-group  .// -->
+                    <article class="filter-group">
+                        <header class="card-header">
+                            <a href="#" data-toggle="collapse" data-target="#collapse_3" aria-expanded="true" class="">
+                                <i class="icon-control fa fa-chevron-down"></i>
+                                <h6 class="title">Price range </h6>
+                            </a>
+                        </header>
+                        <div class="filter-content collapse show" id="collapse_3" style="">
+                            <div class="card-body">
+                                <input type="range" class="custom-range" min="0" max="100" name="">
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label>Min</label>
+                                        <input class="form-control" placeholder="$0" type="number" name="priceFrom" id="minPrice">
+                                    </div>
+                                    <div class="form-group text-right col-md-6">
+                                        <label>Max</label>
+                                        <input class="form-control" placeholder="$1,0000" type="number" name="priceTo">
+                                    </div>
+                                </div> <!-- form-row.// -->
+                                <button class="btn btn-block btn-primary" onclick="filterProducts();">Apply</button>
+                            </div><!-- card-body.// -->
+                        </div>
+                    </article> <!-- filter-group .// -->
+                </div> <!-- card.// -->
+
+            </aside> <!-- col.// -->
+            <main class="col-md-9">
+                <header class="border-bottom mb-4 pb-3">
+                    <div class="form-inline">
+                        <span class="mr-md-auto"></span>
+                        <select class="mr-2 form-control" id="sort" onchange="sortProducts();">
+                            <option data-sort="Asc" data-field="Name">Name A-Z</option>
+                            <option data-sort="Desc" data-field="Name">Name Z-A</option>
+                            <option data-sort="Asc" data-field="Price">Cheapest</option>
+                            <option data-sort="Desc" data-field="Price">Expensive</option>
+                        </select>
+                        <div class="btn-group">
+                            <a href="#" class="btn btn-outline-secondary changeView" data-grid="large" data-toggle="tooltip" title="List view">
+                                <i class="fa fa-bars"></i>
+                            </a>
+                            <a href="#" class="btn  btn-outline-secondary active changeView" data-grid="grid" data-toggle="tooltip" title="Grid view">
+                                <i class="fa fa-th"></i>
+                            </a>
+                        </div>
+                    </div>
+                </header><!-- sect-heading -->
+
+                <div class="row" id="products">
+                    @Html.Partial("ProductsGrid", Model)
+                </div> <!-- row end.// -->
+
+                <div class="d-flex justify-content-center">
+                    <button class="btn btn-primary" onclick="loadMore();">Load more</button>
+                </div>
+            </main> <!-- col.// -->
+
+        </div>
+
+    </div> <!-- container .//  -->
+</section>
+<!-- ========================= SECTION CONTENT END// ========================= -->
+
+@section scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9/dist/sweetalert2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="~/Scripts/script.js"></script>
+
+    <script>
+        const config = {
+            headers: {
+                "X-Requested-With": 'XMLHttpRequest',
+            },
+            params: {
+                subAlias: $('input[name="category"]').val(),
+                limit: 10,
+                grid: "grid"
+            }
+        }
+
+        function setQueryParams() {
+            const urlParams = new URLSearchParams(window.location.search);
+
+            $('.card').find('input[name="name"]').val(urlParams.get('name'));
+            $('.card').find('input[name="priceFrom"]').val(urlParams.get('priceFrom'));
+            $('.card').find('input[name="priceTo"]').val(urlParams.get('priceTo'));
+            $('#sort').find(`option[data-field=${urlParams.get('field')}][data-sort=${urlParams.get('sort')}]`).prop('selected', true);
+        }
+
+        setQueryParams();
+
+        function collectQueryParams() {
+            const data = {
+                name: $('.card').find('input[name="name"]').val(),
+                priceFrom: $('.card').find('input[name="priceFrom"]').val(),
+                priceTo: $('.card').find('input[name="priceTo"]').val(),
+                field: $('#sort').find(':selected').data('field'),
+                sort: $('#sort').find(':selected').data('sort')
+            }
+
+            return data;
+        }
+
+        function encodeQueryData(data) {
+            const ret = [];
+
+            for (let d in data) {
+                ret.push(encodeURIComponent(d) + '=' + encodeURIComponent(data[d]));
+            }
+
+            return ret.join('&');
+        }
+
+        function sortProducts() {
+            const data = collectQueryParams();
+            const queryString = encodeQueryData(data);
+            window.history.replaceState(null, null, `?${queryString}`);
+
+            axios.get(`/Product/List?${queryString}`, config)
+                .then(function (response) {
+                    $('#products').html(response.data);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
+
+        function filterProducts() {
+            const data = collectQueryParams();
+            const queryString = encodeQueryData(data);
+            window.history.replaceState(null, null, `?${queryString}`);
+
+            axios.get(`/Product/List?${queryString}`, config)
+                .then(function (response) {
+                    $('#products').html(response.data);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
+
+        function loadMore() {
+            const data = collectQueryParams();
+            const queryString = encodeQueryData(data);
+            window.history.replaceState(null, null, `?${queryString}`);
+            config.params.limit += 1;
+
+            axios.get(`/Product/List?${queryString}`, config)
+                .then(function (response) {
+                    $('#products').html(response.data);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
+
+        $('.changeView').click(function (e) {
+            e.preventDefault();
+
+            $('.changeView').removeClass('active');
+            $(this).addClass('active');
+
+            const data = collectQueryParams();
+            const queryString = encodeQueryData(data);
+            window.history.replaceState(null, null, `?${queryString}`);
+            config.params.grid = $(this).data('grid');
+
+            axios.get(`/Product/List?${queryString}`, config)
+                .then(function (response) {
+                    $('#products').html(response.data);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        });
+
+        $('.custom-range').on('input', function () {
+            var maxPrice = 4590,
+                minPriceInput = $('#minPrice');
+
+            var step = maxPrice / 100;
+
+            minPriceInput.val(($(this).val() * step).toFixed(2));
+        });
+
+        var modalBtn = $('.btn-overlay[data-modal="quickView"]'),
+            modal = $('.quickViewModal');
+
+        modalBtn.on('click', function (e) {
+            e.preventDefault();
+            modal.show();
+            modal.html($(this).closest('.card').clone());
+
+            modal.find('.btn-overlay').remove();
+
+            var closeBtn = '<span class="close">X</span>';
+
+            modal.find('.card').append(closeBtn);
+
+            modal.on('click', function (e) {
+                if ($(e.target).hasClass('close')) {
+                    modal.hide();
+                }
+            })
+        })
+    </script>
+}

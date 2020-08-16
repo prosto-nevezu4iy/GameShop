@@ -1,0 +1,66 @@
+﻿@model WebUI.Models.ProductsByCategoryViewModel
+
+@{
+    Layout = null;
+}
+
+@foreach (var product in Model.Products)
+{
+    <article class="card card-product-list">
+        <div class="row no-gutters">
+            <aside class="col-md-3">
+                <a href="#" class="img-wrap">
+                    <span class="badge badge-danger"> NEW </span>
+                    <img src="@Url.Action("GetImage", new { id = product.Images.FirstOrDefault().Id })">
+                </a>
+            </aside> <!-- col.// -->
+            <div class="col-md-6">
+                <div class="info-main">
+                    <a href="#" class="h5 title">@product.Name</a>
+                    <div class="rating-wrap mb-3">
+                        <ul class="rating-stars">
+                            <li style="width:80%" class="stars-active">
+                                <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            </li>
+                            <li>
+                                <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            </li>
+                        </ul>
+                        <div class="label-rating">7/10</div>
+                    </div> <!-- rating-wrap.// -->
+
+                    <p>@product.Description</p>
+                </div> <!-- info-main.// -->
+            </div> <!-- col.// -->
+            <aside class="col-sm-3">
+                <div class="info-aside">
+                    <div class="price-wrap">
+                        <span class="price h5">@product.TotalPrice.ToString("c")</span>
+                        <del class="price-old">@product.Price.ToString("c")</del>
+                    </div> <!-- info-price-detail // -->
+                    <p class="text-success">Free shipping</p>
+                    <br>
+                    <p>
+                        @Html.ActionLink("Details", "Show", new { alias = Model.Category.Parent.Alias, subAlias = Model.Category.Alias, productAlias = product.Alias }, new { @class = "btn btn-primary btn-block" })
+                        <div class="d-flex justify-content-around mt-2">
+                            <a href="#" data-id="@product.Id" class="btn btn-primary addToCart">Add to cart </a>
+                            @if (!Model.AreProductsAtWishList[product.Id])
+                            {
+                                <a href="#" data-id="@product.Id" class="btn btn-light addToWishList"><i class="fa fa-heart"></i></a>
+                            }
+                            else
+                            {
+                                <a href="#" data-id="@product.Id" class="btn btn-light removeFromWishList"><i class="fa fa-heart text-danger"></i></a>
+                            }
+                        </div>
+                    </p>
+                </div> <!-- info-aside.// -->
+            </aside> <!-- col.// -->
+        </div> <!-- row.// -->
+    </article>
+
+}

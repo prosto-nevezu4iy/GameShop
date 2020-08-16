@@ -1,0 +1,77 @@
+﻿@model WebUI.Models.AccountInformationViewModel
+
+@{
+    ViewBag.Title = "Account Information";
+}
+
+<!-- ========================= SECTION PAGETOP ========================= -->
+<section class="section-pagetop bg">
+    <div class="container">
+        <h2 class="title-page">Account Information</h2>
+    </div> <!-- container //  -->
+</section>
+<!-- ========================= SECTION INTRO END// ========================= -->
+<!-- ========================= SECTION CONTENT ========================= -->
+<section class="section-content padding-y">
+    <div class="container">
+
+        <div class="row">
+            <aside class="col-md-3">
+                <ul class="list-group">
+                    @Html.ActionLink("Account Overview", "Index", null, new { @class = "list-group-item" })
+                    @Html.ActionLink("Account Information", "Account", null, new { @class = "list-group-item active" })
+                    @Html.ActionLink("Change Password", "ChangePassword", null, new { @class = "list-group-item" })
+                    @Html.ActionLink("Orders", "Orders", null, new { @class = "list-group-item" })
+                </ul>
+            </aside> <!-- col.// -->
+            <main class="col-md-9">
+
+                <!-- ============================ COMPONENT PROFILE 2  ================================= -->
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title mb-4">Profile</h4>
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken();
+                            <div class="form-row">
+                                <div class="col form-group">
+                                    @Html.LabelFor(u => u.FirstName)
+                                    @Html.TextBoxFor(u => u.FirstName, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(u => u.FirstName)
+                                </div> <!-- form-group end.// -->
+                                <div class="col form-group">
+                                    @Html.LabelFor(u => u.LastName)
+                                    @Html.TextBoxFor(u => u.LastName, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(u => u.LastName)
+                                </div> <!-- form-group end.// -->
+                            </div> <!-- form-row.// -->
+
+                            <div class="form-group">
+                                @Html.LabelFor(u => u.Email)
+                                @Html.TextBoxFor(u => u.Email, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(u => u.Email)
+                            </div> <!-- form-row.// -->
+
+                            <div class="form-row">
+                                @Html.EditorFor(u => u.Gender)
+                                @Html.ValidationMessageFor(u => u.Gender)
+                            </div> <!-- form-row.// -->
+
+                            <div class="form-group">
+                                @Html.LabelFor(u => u.PhoneNumber)
+                                @Html.TextBoxFor(u => u.PhoneNumber, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(u => u.PhoneNumber)
+                            </div> <!-- form-row.// -->
+
+                            <button class="btn btn-primary btn-block">Save</button>
+                        }
+                    </div> <!-- card-body.// -->
+                </div> <!-- card .// -->
+                <!-- ============================ COMPONENT PROFILE END.// ================================= -->
+
+            </main> <!-- col.// -->
+        </div>
+
+    </div> <!-- container .//  -->
+</section>
+<!-- ========================= SECTION CONTENT END// ========================= -->

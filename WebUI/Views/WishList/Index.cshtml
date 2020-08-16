@@ -1,0 +1,68 @@
+﻿@model IEnumerable<Core.Domain.WishList>
+
+@{
+    ViewBag.Title = "WishList";
+}
+
+@section styles {
+    <link href="https://cdn.jsdelivr.net/npm/@Html.Raw("@")sweetalert2/theme-dark@3/dark.css" rel="stylesheet">
+}
+
+<section class="section-content padding-y bg">
+    <div class="container">
+        <h1 class="text-center mb-5">Your WishList</h1>
+        <!-- ============================ COMPONENT 1 ================================= -->
+        <div class="row">
+            <aside class="col-lg-12">
+                <div class="card">
+                    <table class="table table-borderless table-shopping-cart">
+                        <thead class="text-muted">
+                            <tr class="small text-uppercase">
+                                <th scope="col">Product</th>
+                                <th scope="col" width="120">Price</th>
+                                <th scope="col" class="text-right" width="200"> </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr id="row-@item.Product.Id">
+                                    <td>
+                                        <figure class="itemside align-items-center">
+                                            <div class="aside"><img src="@Url.Action("GetImage", new { id = item.Product.Images.FirstOrDefault().Id })" class="img-sm"></div>
+                                            <figcaption class="info">
+                                                @Html.ActionLink(item.Product.Name, "Show", "Product", new { alias = item.Product.Category.Parent.Alias, subAlias = item.Product.Category.Alias, productAlias = item.Product.Alias }, new { @class = "title text-dark" })
+                                            </figcaption>
+                                        </figure>
+                                    </td>
+                                    <td>
+                                        <div class="price-wrap">
+                                            <var class="price">@item.Product.TotalPrice.ToString("c")</var>
+                                        </div> <!-- price-wrap .// -->
+                                    </td>
+                                    <td class="text-right">
+                                        <a data-original-title="Save to Cart" data-id="@item.Product.Id" title="" href="" class="btn btn-light createCart" data-toggle="tooltip"> <i class="fa fa-shopping-cart"></i></a>
+                                        <a href="#" data-id="@item.Product.Id" class="btn btn-light btn-round removeFromWishList"> Remove</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </aside> <!-- col.// -->
+
+
+        </div> <!-- row.// -->
+        <!-- ============================ COMPONENT 1 END .// ================================= -->
+
+        <br><br>
+
+
+    </div>
+</section>
+
+@section scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9/dist/sweetalert2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="~/Scripts/script.js"></script>
+}

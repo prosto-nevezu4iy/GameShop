@@ -1,0 +1,38 @@
+﻿@model Core.Domain.Category
+
+@{
+    ViewBag.Title = "List";
+}
+
+<!-- ========================= SECTION CONTENT ========================= -->
+<section class="section-content padding-y">
+    <div class="container">
+
+        <div class="row">
+            <main class="col-md-12">
+                <div class="row">
+                    @foreach (var subCategory in Model.Children)
+                    {
+                        <div class="col-md-4">
+                            <figure class="card card-product-grid">
+                                <div class="img-wrap">
+                                    <span class="badge badge-danger"> NEW </span>
+                                    <img src="@Url.Action("GetImage", new { id = subCategory.Id })">
+                                    <a class="btn-overlay" href="#"><i class="fa fa-search-plus"></i> Quick view</a>
+                                </div> <!-- img-wrap.// -->
+                                <figcaption class="info-wrap">
+                                    <div class="fix-height">
+                                        @Html.ActionLink(subCategory.Name, "List", "Product", new { alias = Model.Alias, subAlias = subCategory.Alias }, new { @class = "title" })
+                                        <!-- price-wrap.// -->
+                                    </div>
+                                    @Html.ActionLink("View Category", "List", "Product", new { alias = Model.Alias, subAlias = subCategory.Alias }, new { @class = "btn btn-block btn-primary" })
+                                </figcaption>
+                            </figure>
+                        </div>
+                    }
+                </div> <!-- row end.// -->
+            </main> <!-- col.// -->
+        </div>
+    </div> <!-- container .//  -->
+</section>
+<!-- ========================= SECTION CONTENT END// ========================= -->

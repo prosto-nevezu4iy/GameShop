@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web;
+
+namespace WebUI.Areas.Admin.Models
+{
+    public class ParameterGroupViewModel
+    {
+        [Required]
+        [StringLength(255)]
+        public string Name { get; set; }
+    }
+}

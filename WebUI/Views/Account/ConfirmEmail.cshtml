@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "Confirmation email";
+}
+
+<section class="section-conten padding-y" style="min-height:84vh">
+    <div class="mx-auto" style="max-width: 380px; margin-top:100px;">
+        <h2>Confirm email.</h2>
+
+        <p>
+            Thank you for confirming your email. Please
+            @Html.RouteLink("Log In", "Default", new { controller = "Account", action = "Login" })
+        </p>
+    </div>
+</section>

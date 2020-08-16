@@ -1,0 +1,80 @@
+﻿@model IEnumerable<Core.Domain.Order>
+
+@{
+    ViewBag.Title = "Orders";
+}
+
+<!-- ========================= SECTION PAGETOP ========================= -->
+<section class="section-pagetop bg">
+    <div class="container">
+        <h2 class="title-page">Orders</h2>
+    </div> <!-- container //  -->
+</section>
+<!-- ========================= SECTION INTRO END// ========================= -->
+<!-- ========================= SECTION CONTENT ========================= -->
+<section class="section-content padding-y">
+    <div class="container">
+
+        <div class="row">
+            <aside class="col-md-3">
+                <ul class="list-group">
+                    @Html.ActionLink("Account Overview", "Index", null, new { @class = "list-group-item" })
+                    @Html.ActionLink("Account Information", "Account", null, new { @class = "list-group-item" })
+                    @Html.ActionLink("Change Password", "ChangePassword", null, new { @class = "list-group-item" })
+                    @Html.ActionLink("Orders", "Orders", null, new { @class = "list-group-item active" })
+                </ul>
+            </aside> <!-- col.// -->
+            <main class="col-md-9">
+                @foreach (var order in Model)
+                {
+                    <article class="card">
+                        <header class="card-header">
+                            <strong class="d-inline-block mr-3">Order ID: @order.Id</strong>
+                            <span>Order Date: @order.OrderDate.ToLongDateString()</span>
+                        </header>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <h6 class="text-muted">Delivery to</h6>
+                                    <p>
+                                        @order.FirstName @order.LastName <br>
+                                        Phone @order.Phone Email: @order.Email <br>
+                                        Location: @order.Address, @order.Country, @order.City <br>
+                                        Zip Code: @order.PostalCode
+                                    </p>
+                                </div>
+                                <div class="col-md-4">
+                                    <p>
+                                        <span class="b">Total:  @order.Total.ToString("c") </span>
+                                    </p>
+                                </div>
+                            </div> <!-- row.// -->
+                        </div> <!-- card-body .// -->
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                @foreach (var orderDetail in order.OrderDetails)
+                                {
+                                    <tr>
+                                        <td width="65">
+                                            <img src="@Url.Action("GetImage", new {  id = orderDetail.Product.Images.FirstOrDefault().Id })" class="img-xs border">
+                                        </td>
+                                        <td>
+                                            <p class="title mb-0">  </p>
+                                            <var class="price text-muted">@orderDetail.Product.TotalPrice.ToString("c")</var>
+                                        </td>
+                                        <td> @orderDetail.Product.Name </td>
+                                        <td width="250">
+                                            @Html.ActionLink("Details", "Show", "Product", new { alias = orderDetail.Product.Category.Parent.Alias, subAlias = orderDetail.Product.Category.Alias, productAlias = orderDetail.Product.Alias }, new { @class = "btn btn-light" })
+                                        </td>
+                                    </tr>
+                                }
+                            </table>
+                        </div> <!-- table-responsive .end// -->
+                    </article> <!-- order-group.// -->
+                }
+            </main>
+        </div>
+
+    </div> <!-- container .//  -->
+</section>
+<!-- ========================= SECTION CONTENT END// ========================= -->

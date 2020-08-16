@@ -1,0 +1,112 @@
+﻿@model WebUI.Models.ProductViewModel
+@{
+    ViewBag.Title = "Show";
+}
+
+@section styles {
+    <link href="https://cdn.jsdelivr.net/npm/@Html.Raw("@")sweetalert2/theme-dark@3/dark.css" rel="stylesheet">
+}
+
+<section class="section-content padding-y bg">
+    <div class="container">
+        <!-- ===================s========= COMPONENT 3 ================================= -->
+        <div class="card">
+            <div class="row no-gutters">
+                <aside class="col-sm-6 border-right">
+                    <article class="gallery-wrap">
+                        <div class="img-big-wrap">
+                            <a href="#"><img src="@Url.Action("GetImage", new { id = Model.Product.Images.FirstOrDefault().Id })"></a>
+                        </div> <!-- img-big-wrap.// -->
+                        <div class="thumbs-wrap">
+                            @foreach (var image in Model.Product.Images.Skip(1))
+                            {
+                                <a href="#" class="item-thumb"> <img src="@Url.Action("GetImage", new { id = image.Id })"></a>
+                            }
+                        </div> <!-- thumbs-wrap.// -->
+                    </article> <!-- gallery-wrap .end// -->
+                </aside>
+                <main class="col-sm-6">
+                    <article class="content-body">
+                        <h3 class="title">@Model.Product.Name</h3>
+                        <div class="rating-wrap mb-3">
+                            <span class="badge badge-warning"> <i class="fa fa-star"></i> 3.8</span>
+                            <small class="text-muted ml-2">45 reviews</small>
+                        </div>
+
+                        <p>
+                            @Model.Product.Description
+                        </p>
+
+                        <div class="item-option-select">
+                            <h6>Model</h6>
+                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                <label class="btn btn-light active">
+                                    <input type="radio" name="radio_size" checked> Xs
+                                </label>
+                                <label class="btn btn-light">
+                                    <input type="radio" name="radio_size"> Xs Max
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="item-option-select">
+                            <h6>Color</h6>
+                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                <label class="btn btn-light">
+                                    <input type="radio" name="radio_color"> Silver
+                                </label>
+                                <label class="btn btn-light active">
+                                    <input type="radio" name="radio_color" checked> Gray
+                                </label>
+                                <label class="btn btn-light">
+                                    <input type="radio" name="radio_color"> Gold
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="item-option-select">
+                            <h6>Capacity</h6>
+                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                <label class="btn btn-light active">
+                                    <input type="radio" name="options" checked> 64 GB
+                                </label>
+                                <label class="btn btn-light">
+                                    <input type="radio" name="options"> 256 GB
+                                </label>
+                                <label class="btn btn-light">
+                                    <input type="radio" name="options"> 512 GB
+                                </label>
+                            </div>
+                        </div>
+
+
+                        <div class="row mt-3 align-items-center">
+                            <div class="col">
+                                <span class="price h4">@Model.Product.Price.ToString("c")</span>
+                            </div> <!-- col.// -->
+                            <div class="col text-right">
+                                <a href="#" data-id="@Model.Product.Id" class="btn  btn-primary addToCart"> Add to cart <i class="fas fa-shopping-cart"></i>  </a>
+                                @if (Model.IsProductAtWishList)
+                                {
+                                    <a href="#" data-id="@Model.Product.Id" class="btn  btn-light removeFromWishList"> <i class="fas fa-heart text-danger"></i>  </a>
+                                }
+                                else
+                                {
+                                    <a href="#" data-id="@Model.Product.Id" class="btn  btn-light addToWishList"> <i class="fas fa-heart"></i>  </a>
+                                }
+                            </div> <!-- col.// -->
+                        </div> <!-- row.// -->
+
+                    </article> <!-- product-info-aside .// -->
+                </main> <!-- col.// -->
+            </div> <!-- row.// -->
+        </div> <!-- card.// -->
+        <!-- ============================ COMPONENT 3 END .// ================================= -->
+    </div>
+</section>
+
+@section scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9/dist/sweetalert2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="~/Scripts/script.js"></script>
+}

@@ -1,0 +1,41 @@
+﻿@model WebUI.Models.ProductsByCategoryViewModel
+
+@{
+    Layout = null;
+}
+
+@foreach (var product in Model.Products)
+{
+    <div class="col-md-4">
+        <figure class="card card-product-grid">
+            <div class="img-wrap">
+                <span class="badge badge-danger"> NEW </span>
+                <img src="@Url.Action("GetImage", new { id = product.Images.FirstOrDefault().Id })">
+                <a class="btn-overlay" href="#" data-modal="quickView"><i class="fa fa-search-plus"></i> Quick view</a>
+            </div> <!-- img-wrap.// -->
+            <figcaption class="info-wrap">
+                <div class="fix-height">
+                    @Html.ActionLink(product.Name, "Show", new { alias = Model.Category.Parent.Alias, subAlias = Model.Category.Alias, productAlias = product.Alias }, new { @class = "title" })
+                    <div class="price-wrap mt-2">
+                        <span class="price">@product.TotalPrice.ToString("c")</span>
+                        <del class="price-old">@product.Price.ToString("c")</del>
+                    </div> <!-- price-wrap.// -->
+                </div>
+                <div class="d-flex justify-content-around">
+                    <a href="#" data-id="@product.Id" class="btn btn-primary addToCart">Add to cart </a>
+                    @if (!Model.AreProductsAtWishList[product.Id])
+                    {
+                        <a href="#" data-id="@product.Id" class="btn btn-light addToWishList"><i class="fa fa-heart"></i></a>
+                    }
+                    else
+                    {
+                        <a href="#" data-id="@product.Id" class="btn btn-light removeFromWishList"><i class="fa fa-heart text-danger"></i></a>
+                    }
+                </div>
+            </figcaption>
+        </figure>
+    </div>
+}
+<div class="quickViewModal">
+    
+</div>

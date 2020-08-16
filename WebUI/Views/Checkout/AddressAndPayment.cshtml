@@ -1,0 +1,82 @@
+﻿@model WebUI.Models.OrderViewModel
+@{
+    ViewBag.Title = "Address And Payment";
+}
+
+<section class="section-content padding-y bg">
+    <div class="container">
+        <div class="row">
+            <div class="card col-9 mx-auto mb-4">
+                <div class="card-body">
+                    <h4 class="card-title mb-4">Delivery info</h4>
+                    @using (Html.BeginForm())
+                    {
+                        <div class="form-group">
+                            <label class="custom-control custom-radio custom-control-inline">
+                                <input class="custom-control-input" checked="" type="radio" name="gender" value="option1">
+                                <span class="custom-control-label"> Standart Delivery <br>Free </span>
+                            </label>
+                            <label class="custom-control custom-radio custom-control-inline">
+                                <input class="custom-control-input" type="radio" name="gender" value="option2">
+                                <span class="custom-control-label"> Express Delivery <br> $31 </span>
+                            </label>
+                        </div> <!-- form-group end.// -->
+                        <div class="form-row">
+                            <div class="col form-group">
+                                @Html.LabelFor(o => o.FirstName)
+                                @Html.TextBoxFor(o => o.FirstName, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(o => o.FirstName)
+                            </div> <!-- form-group end.// -->
+                            <div class="col form-group">
+                                @Html.LabelFor(o => o.LastName)
+                                @Html.TextBoxFor(o => o.LastName, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(o => o.LastName)
+                            </div> <!-- form-group end.// -->
+                        </div> <!-- form-row end.// -->
+
+                        <div class="form-row">
+                            <div class="col form-group">
+                                @Html.LabelFor(o => o.Email)
+                                @Html.TextBoxFor(o => o.Email, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(o => o.Email)
+                            </div> <!-- form-group end.// -->
+                            <div class="col form-group">
+                                @Html.LabelFor(o => o.Phone)
+                                @Html.TextBoxFor(o => o.Phone, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(o => o.Phone)
+                            </div> <!-- form-group end.// -->
+                        </div> <!-- form-row end.// -->
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                @Html.LabelFor(o => o.Country)
+                                @Html.DropDownListFor(o => o.Country, Model.Countries, "Select Country", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(o => o.Country)
+                            </div> <!-- form-group end.// -->
+                            <div class="form-group col-md-6">
+                                @Html.LabelFor(o => o.City)
+                                @Html.TextBoxFor(o => o.City, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(o => o.City)
+                            </div> <!-- form-group end.// -->
+                        </div> <!-- form-row.// -->
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                @Html.LabelFor(o => o.Address)
+                                @Html.TextBoxFor(o => o.Address, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(o => o.Address)
+                            </div>
+                            <div class="form-group col-md-6">
+                                @Html.LabelFor(o => o.PostalCode)
+                                @Html.TextBoxFor(o => o.PostalCode, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(o => o.PostalCode)
+                            </div>
+                        </div> <!-- form-group// -->
+                        <div id="paypal-button-container"></div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-block"> Continue  </button>
+                        </div> <!-- form-group// -->
+                    }
+                </div> <!-- card-body.// -->
+            </div> <!-- card .// -->
+        </div>
+    </div>
+</section>

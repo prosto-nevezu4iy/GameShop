@@ -1,0 +1,247 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{5E551347-700A-40B6-9D6E-49F4D46B968A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Core</RootNamespace>
+    <AssemblyName>Core</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.3\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.3\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.3\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.4.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.4.1.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.3.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.3.0.1\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Abstract\Repositories\ICartRepository.cs" />
+    <Compile Include="Abstract\Repositories\ICategoryRepository.cs" />
+    <Compile Include="Abstract\Repositories\IOrderRepository.cs" />
+    <Compile Include="Abstract\Repositories\IParameterGroupRepository.cs" />
+    <Compile Include="Abstract\Repositories\IParameterSubGroupRepository.cs" />
+    <Compile Include="Abstract\Repositories\IParameterValueRepository.cs" />
+    <Compile Include="Abstract\Repositories\IProductImageRepository.cs" />
+    <Compile Include="Abstract\Repositories\IProductRepository.cs" />
+    <Compile Include="Abstract\Repositories\IWishListRepository.cs" />
+    <Compile Include="Domain\Cart.cs" />
+    <Compile Include="Domain\Enums\Gender.cs" />
+    <Compile Include="Domain\Order.cs" />
+    <Compile Include="Domain\OrderDetail.cs" />
+    <Compile Include="Domain\ParameterGroup.cs" />
+    <Compile Include="Domain\ParameterSubGroup.cs" />
+    <Compile Include="Domain\ParameterValue.cs" />
+    <Compile Include="Domain\ProductImage.cs" />
+    <Compile Include="Domain\User.cs" />
+    <Compile Include="Domain\Category.cs" />
+    <Compile Include="Domain\Product.cs" />
+    <Compile Include="Domain\Role.cs" />
+    <Compile Include="Domain\WishList.cs" />
+    <Compile Include="Extensions\IdentityExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Infrastructure\AppRoleManager.cs" />
+    <Compile Include="Infrastructure\AppUserManager.cs" />
+    <Compile Include="Infrastructure\EmailService.cs" />
+    <Compile Include="Infrastructure\EntityConfigurations\CartConfiguration.cs" />
+    <Compile Include="Infrastructure\EntityConfigurations\CategoryConfiguration.cs" />
+    <Compile Include="Infrastructure\EntityConfigurations\OrderConfiguration.cs" />
+    <Compile Include="Infrastructure\EntityConfigurations\ParameterGroupConfiguration.cs" />
+    <Compile Include="Infrastructure\EntityConfigurations\ParameterSubGroupConfiguration.cs" />
+    <Compile Include="Infrastructure\EntityConfigurations\ParameterValueConfiguration.cs" />
+    <Compile Include="Infrastructure\EntityConfigurations\ProductConfiguration.cs" />
+    <Compile Include="Infrastructure\EntityConfigurations\UserConfiguration.cs" />
+    <Compile Include="Infrastructure\EntityConfigurations\WishListConfiguration.cs" />
+    <Compile Include="Infrastructure\GameShopContext.cs" />
+    <Compile Include="Abstract\IUnitOfWork.cs" />
+    <Compile Include="Infrastructure\Repositories\CartRepository.cs" />
+    <Compile Include="Infrastructure\Repositories\CategoryRepository.cs" />
+    <Compile Include="Infrastructure\Repositories\OrderRepository.cs" />
+    <Compile Include="Infrastructure\Repositories\ParameterGroupRepository.cs" />
+    <Compile Include="Infrastructure\Repositories\ParameterSubGroupRepository.cs" />
+    <Compile Include="Infrastructure\Repositories\ParameterValueRepository.cs" />
+    <Compile Include="Infrastructure\Repositories\ProductImageRepository.cs" />
+    <Compile Include="Infrastructure\Repositories\ProductRepository.cs" />
+    <Compile Include="Infrastructure\Repositories\Repository.cs" />
+    <Compile Include="Infrastructure\Repositories\WishListRepository.cs" />
+    <Compile Include="Infrastructure\UnitOfWork.cs" />
+    <Compile Include="Migrations\202005151909326_InitialModel.cs" />
+    <Compile Include="Migrations\202005151909326_InitialModel.designer.cs">
+      <DependentUpon>202005151909326_InitialModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005241556557_AddedSubCategoriesToCategoriesTable.cs" />
+    <Compile Include="Migrations\202005241556557_AddedSubCategoriesToCategoriesTable.designer.cs">
+      <DependentUpon>202005241556557_AddedSubCategoriesToCategoriesTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005241558235_AddedAliasToCategoriesTable.cs" />
+    <Compile Include="Migrations\202005241558235_AddedAliasToCategoriesTable.designer.cs">
+      <DependentUpon>202005241558235_AddedAliasToCategoriesTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005311250333_AddedAliasToProductsTable.cs" />
+    <Compile Include="Migrations\202005311250333_AddedAliasToProductsTable.designer.cs">
+      <DependentUpon>202005311250333_AddedAliasToProductsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202006071545522_AddedUser.cs" />
+    <Compile Include="Migrations\202006071545522_AddedUser.designer.cs">
+      <DependentUpon>202006071545522_AddedUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202006141337443_AddedCart.cs" />
+    <Compile Include="Migrations\202006141337443_AddedCart.designer.cs">
+      <DependentUpon>202006141337443_AddedCart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202006211342055_AddedOrders.cs" />
+    <Compile Include="Migrations\202006211342055_AddedOrders.designer.cs">
+      <DependentUpon>202006211342055_AddedOrders.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202006281531340_AddedImageToCategoriesTable.cs" />
+    <Compile Include="Migrations\202006281531340_AddedImageToCategoriesTable.designer.cs">
+      <DependentUpon>202006281531340_AddedImageToCategoriesTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202007032011076_AddedDiscountToProductsTable.cs" />
+    <Compile Include="Migrations\202007032011076_AddedDiscountToProductsTable.designer.cs">
+      <DependentUpon>202007032011076_AddedDiscountToProductsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202007032015090_AddedProductImagesTable.cs" />
+    <Compile Include="Migrations\202007032015090_AddedProductImagesTable.designer.cs">
+      <DependentUpon>202007032015090_AddedProductImagesTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202007091932391_AddedParameters.cs" />
+    <Compile Include="Migrations\202007091932391_AddedParameters.designer.cs">
+      <DependentUpon>202007091932391_AddedParameters.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202007191131131_AddedParameterValuesForProductsTable.cs" />
+    <Compile Include="Migrations\202007191131131_AddedParameterValuesForProductsTable.designer.cs">
+      <DependentUpon>202007191131131_AddedParameterValuesForProductsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202008081222500_AddedWishListTable.cs" />
+    <Compile Include="Migrations\202008081222500_AddedWishListTable.designer.cs">
+      <DependentUpon>202008081222500_AddedWishListTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Abstract\Repositories\IRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202005151909326_InitialModel.resx">
+      <DependentUpon>202005151909326_InitialModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005241556557_AddedSubCategoriesToCategoriesTable.resx">
+      <DependentUpon>202005241556557_AddedSubCategoriesToCategoriesTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005241558235_AddedAliasToCategoriesTable.resx">
+      <DependentUpon>202005241558235_AddedAliasToCategoriesTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005311250333_AddedAliasToProductsTable.resx">
+      <DependentUpon>202005311250333_AddedAliasToProductsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006071545522_AddedUser.resx">
+      <DependentUpon>202006071545522_AddedUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006141337443_AddedCart.resx">
+      <DependentUpon>202006141337443_AddedCart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006211342055_AddedOrders.resx">
+      <DependentUpon>202006211342055_AddedOrders.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006281531340_AddedImageToCategoriesTable.resx">
+      <DependentUpon>202006281531340_AddedImageToCategoriesTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202007032011076_AddedDiscountToProductsTable.resx">
+      <DependentUpon>202007032011076_AddedDiscountToProductsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202007032015090_AddedProductImagesTable.resx">
+      <DependentUpon>202007032015090_AddedProductImagesTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202007091932391_AddedParameters.resx">
+      <DependentUpon>202007091932391_AddedParameters.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202007191131131_AddedParameterValuesForProductsTable.resx">
+      <DependentUpon>202007191131131_AddedParameterValuesForProductsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202008081222500_AddedWishListTable.resx">
+      <DependentUpon>202008081222500_AddedWishListTable.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+</Project>
