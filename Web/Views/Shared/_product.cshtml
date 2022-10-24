@@ -1,0 +1,30 @@
+﻿@model ProductViewModel
+
+<form asp-controller="Basket" method="post">
+    <div class="col mb-5">
+        <div class="card h-100">
+            <!-- Product image-->
+            <img class="card-img-top" width="268" height="151" src="@Model.PictureUri" alt="..." />
+            <!-- Product details-->
+            <div class="card-body p-4">
+                <div class="text-center">
+                    <!-- Product name-->
+                    <h5 class="fw-bolder">@Model.Name</h5>
+                    <!-- Product price-->
+                    @Model.Price.ToString("N2")
+                </div>
+            </div>
+            <!-- Product actions-->
+            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                <div class="text-center">
+                    <input class="btn btn-outline-dark mt-auto" type="submit" value="[ ADD TO BASKET ]" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <input type="hidden" asp-for="@Model.Id" name="id" />
+    <input type="hidden" asp-for="@Model.Name" name="name" />
+    <input type="hidden" asp-for="@Model.PictureUri" name="pictureUri" />
+    <input type="hidden" asp-for="@Model.Price" name="price" />
+</form>
