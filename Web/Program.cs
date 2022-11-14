@@ -1,6 +1,8 @@
 using Infrastructure;
 using Infrastructure.Data;
+using System.IdentityModel.Tokens.Jwt;
 using Web.Configuration;
+using Web.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +12,28 @@ builder.Services.AddCoreServices(builder.Configuration);
 builder.Services.AddWebServices(builder.Configuration);
 
 builder.Services.AddControllersWithViews();
+
+JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultScheme = "Cookies";
+    options.DefaultChallengeScheme = "oidc";
+})
+    .AddCookie("Cookies")
+    .AddOpenIdConnect("oidc", options =>
+    {
+        options.Authority = "https://localhost:5002";
+
+        options.ClientId = "GameShop";
+        options.ClientSecret = "49C1A7E1-0C79-4A89-A3D6-A37998FB86B0";
+        options.ResponseType = "code";
+
+        options.Scope.Add("profile");
+        options.GetClaimsFromUserInfoEndpoint = true;
+
+        options.SaveTokens = true;
+    });
 
 var app = builder.Build();
 
@@ -43,6 +67,8 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseTransferAnonymousBasketToUser();
 
 app.UseEndpoints(endpoints =>
 {

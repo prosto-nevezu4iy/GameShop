@@ -1,0 +1,11 @@
+﻿@model BasketComponentViewModel
+
+@{
+    ViewData["Title"] = "My Basket";
+}
+
+<a class="btn btn-outline-dark" asp-controller="Basket" asp-action="Index">
+    <i class="bi-cart-fill me-1"></i>
+    Cart
+    <span class="badge bg-dark text-white ms-1 rounded-pill">@Model.ItemsCount</span>
+</a>

@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ApplicationCore.Interfaces;
+using Ardalis.GuardClauses;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualBasic;
 using System.Diagnostics;
 using Web.Interfaces;
@@ -9,10 +13,15 @@ namespace Web.Controllers
     public class HomeController : Controller
     {
         private readonly ICatalogViewModelService _catalogViewModelService;
+        private readonly IBasketService _basketService;
 
-        public HomeController(ICatalogViewModelService catalogViewModelService)
+        public HomeController(
+            ICatalogViewModelService catalogViewModelService, 
+            ICurrentUserService currentUserService, 
+            IBasketService basketService)
         {
             _catalogViewModelService = catalogViewModelService;
+            _basketService = basketService;
         }
 
         public async Task<IActionResult> Index(CatalogIndexViewModel catalogModel, int? pageId)

@@ -1,0 +1,95 @@
+﻿@model BasketViewModel
+
+@{
+    ViewData["Title"] = "Basket";
+}
+
+<div class="container px-4 px-lg-5 mt-5">
+    @if (Model.Items.Any())
+    {
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <form method="post" asp-action="Update">
+            <div class="row mb-3">
+                <div class="col text-uppercase fw-bold">
+                    Product
+                </div>
+                <div class="col">
+                </div>
+                <div class="col text-uppercase fw-bold">
+                    Price
+                </div>
+                <div class="col text-uppercase fw-bold">
+                    Quantity
+                </div>
+                <div class="col text-uppercase fw-bold">
+                    Cost
+                </div>
+            </div>
+            @for (int i = 0; i < Model.Items.Count; i++)
+            {
+                var item = Model.Items[i];
+
+                <div class="row align-items-start justify-content-center mb-3">
+                    <div class="col">
+                        <img class="basket-image img-thumbnail" src="@item.PictureUrl" />
+                    </div>
+                    <div class="col">
+                        @item.ProductName
+                    </div>
+                    <div class="col">
+                        $ @item.UnitPrice.ToString("N2")
+                    </div>
+                    <div class="col">
+                        <input type="hidden" name="@("Items[" + i + "].Id")" value="@item.Id" />
+                        <input type="hidden" name="@("Items[" + i + "].Quantity")" value="@item.Quantity" />
+                        @item.Quantity
+                    </div>
+                    <div class="col text-info fw-bold">
+                        $ @Math.Round(item.Quantity * item.UnitPrice, 2).ToString("N2")
+                    </div>
+                </div>
+            }
+            <div class="row mt-3">
+                <div class="col"></div>
+                <div class="col"></div>
+                <div class="col"></div>
+                <div class="col"></div>
+                <div class="col text-uppercase fw-bold">
+                    Total
+                </div>
+            </div>
+            <div class="row">
+                <div class="col"></div>
+                <div class="col"></div>
+                <div class="col"></div>
+                <div class="col"></div>
+                <div class="col text-info fw-bold">
+                    $ @Model.Total().ToString("N2")
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col">
+                    <a class="btn btn-info text-uppercase" asp-action="Index">[ Back ]</a>
+                </div>
+                <div class="col"></div>
+                <div class="col"></div>
+                <div class="col"></div>
+                <div class="col">
+                    <button type="submit" class="btn btn-info text-uppercase">[ Pay Now ]</button>
+                </div>
+            </div>
+        </form>
+    }
+    else
+    {
+        <h3 class="row">
+            Basket is empty.
+        </h3>
+
+        <section>
+            <a asp-controller="Home" asp-action="Index" class="btn text-white">[ Continue Shopping ]</a>
+        </section>
+    }
+</div>

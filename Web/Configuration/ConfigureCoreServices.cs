@@ -2,6 +2,7 @@
 using ApplicationCore.Interfaces;
 using ApplicationCore.Services;
 using Infrastructure.Data;
+using Infrastructure.Data.Queries;
 
 namespace Web.Configuration
 {
@@ -13,6 +14,8 @@ namespace Web.Configuration
             services.AddScoped(typeof(IReadRepository<>), typeof(EfRepository<>));
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
 
+            services.AddScoped<IBasketService, BasketService>();
+            services.AddScoped<IBasketQueryService, BasketQueryService>();
             services.AddSingleton<IUriComposer>(new UriComposer(configuration.Get<CatalogSettings>()));
 
             return services;

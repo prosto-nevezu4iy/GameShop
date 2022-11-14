@@ -1,0 +1,24 @@
+﻿@using ApplicationCore.Interfaces
+@inject ICurrentUserService currentUserService
+
+@if (Context.User.Identity.IsAuthenticated)
+{
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            Welcome, @currentUserService.FirstName @currentUserService.LastName
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <li><a class="dropdown-item" href="#">My Orders</a></li>
+            <li><a class="dropdown-item" asp-controller="Account" asp-action="UserInfo">My Account</a></li>
+            <li><a class="dropdown-item" asp-controller="Account" asp-action="Logout">Logout</a></li>
+        </ul>
+    </div>
+}
+else
+{
+    <li class="nav-item">
+        <form method="post" asp-controller="Account" asp-action="Login">
+            <input type="submit" class="nav-link" value="Login">
+        </form>
+    </li>
+}
