@@ -12,6 +12,7 @@ namespace Web.Configuration
             services.Configure<CatalogSettings>(configuration);
             services.AddScoped<ICatalogViewModelService, CatalogViewModelService>();
             services.AddScoped<IBasketViewModelService, BasketViewModelService>();
+            services.AddScoped<IOrderViewModelService, OrderViewModelService>();
 
             services.AddSingleton<ICurrentUserService, CurrentUserService>();
             services.AddHttpContextAccessor();

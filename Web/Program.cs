@@ -1,10 +1,19 @@
 using Infrastructure;
 using Infrastructure.Data;
+using Serilog;
 using System.IdentityModel.Tokens.Jwt;
 using Web.Configuration;
 using Web.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var logger = new LoggerConfiguration()
+                    .ReadFrom.Configuration(builder.Configuration)
+                    .Enrich.FromLogContext()
+                    .CreateLogger();
+
+builder.Logging.ClearProviders();
+builder.Logging.AddSerilog(logger);
 
 Dependencies.ConfigureServices(builder.Configuration, builder.Services);
 

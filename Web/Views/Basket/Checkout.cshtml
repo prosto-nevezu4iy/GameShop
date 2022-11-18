@@ -4,12 +4,24 @@
     ViewData["Title"] = "Basket";
 }
 
+@section Header {
+    <!-- Header-->
+    <header class="bg-dark py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="text-center text-white">
+                <h1 class="display-4 fw-bolder">Shop in style</h1>
+                <p class="lead fw-normal text-white-50 mb-0">With this shop hompeage template</p>
+            </div>
+        </div>
+    </header>
+}
+
 <div class="container px-4 px-lg-5 mt-5">
     @if (Model.Items.Any())
     {
         <div asp-validation-summary="All" class="text-danger"></div>
 
-        <form method="post" asp-action="Update">
+        <form method="post" asp-action="Checkout">
             <div class="row mb-3">
                 <div class="col text-uppercase fw-bold">
                     Product
@@ -32,7 +44,7 @@
 
                 <div class="row align-items-start justify-content-center mb-3">
                     <div class="col">
-                        <img class="basket-image img-thumbnail" src="@item.PictureUrl" />
+                        <img class="cropped-image img-thumbnail" src="@item.PictureUrl" />
                     </div>
                     <div class="col">
                         @item.ProductName

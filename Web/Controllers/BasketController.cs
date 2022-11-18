@@ -1,4 +1,6 @@
 ﻿using ApplicationCore.Entities;
+using ApplicationCore.Entities.OrderAggregate;
+using ApplicationCore.Exceptions;
 using ApplicationCore.Interfaces;
 using Ardalis.GuardClauses;
 using Microsoft.AspNetCore.Authorization;
@@ -16,17 +18,23 @@ namespace Web.Controllers
         private readonly IBasketViewModelService _basketViewModelService;
         private readonly IBasketService _basketService;
         private readonly ICurrentUserService _currentUserService;
+        private readonly IOrderService _orderService;
+        private readonly ILogger<BasketController> _logger;
 
         public BasketController(
             IRepository<Product> productRepository,
             IBasketViewModelService basketViewModelService,
             IBasketService basketService,
-            ICurrentUserService currentUserService)
+            ICurrentUserService currentUserService,
+            IOrderService orderService,
+            ILogger<BasketController> logger)
         {
             _productRepository = productRepository;
             _basketViewModelService = basketViewModelService;
             _basketService = basketService;
             _currentUserService = currentUserService;
+            _orderService = orderService;
+            _logger = logger;
         }
 
         public async Task<IActionResult> Index()
@@ -68,7 +76,7 @@ namespace Web.Controllers
             }
 
             var updateModel = items.ToDictionary(b => b.Id.ToString(), b => b.Quantity);
-            var basket = await _basketService.SetQuantities(basketView.Id, updateModel);
+            await _basketService.SetQuantities(basketView.Id, updateModel);
 
             return RedirectToAction(nameof(Index));
         }
@@ -94,17 +102,22 @@ namespace Web.Controllers
 
                 var updateModel = items.ToDictionary(b => b.Id.ToString(), b => b.Quantity);
                 await _basketService.SetQuantities(basketViewModel.Id, updateModel);
-                await _orderService.CreateOrderAsync(BasketModel.Id, new Address("123 Main St.", "Kent", "OH", "United States", "44240"));
-                await _basketService.DeleteBasketAsync(BasketModel.Id);
+                await _orderService.CreateOrderAsync(basketViewModel.Id, new Address("123 Main St.", "Kent", "OH", "United States", "44240"));
+                await _basketService.DeleteBasketAsync(basketViewModel.Id);
             }
             catch (EmptyBasketOnCheckoutException emptyBasketOnCheckoutException)
             {
-                //Redirect to Empty Basket page
-                // _logger.LogWarning(emptyBasketOnCheckoutException.Message);
-                return RedirectToPage("/Basket/Index");
+                 _logger.LogWarning(emptyBasketOnCheckoutException.Message);
+                return RedirectToAction(nameof(Index));
             }
 
-            return RedirectToPage("Success");
+            return RedirectToAction(nameof(Success));
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Success()
+        {
+            return View();
         }
 
         [HttpPost]

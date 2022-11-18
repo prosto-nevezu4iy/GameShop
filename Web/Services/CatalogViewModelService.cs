@@ -2,6 +2,7 @@
 using ApplicationCore.Interfaces;
 using ApplicationCore.Specifications;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Serilog.Core;
 using Web.Interfaces;
 using Web.ViewModels;
 
@@ -12,20 +13,23 @@ namespace Web.Services
         private readonly IRepository<Product> _productRepository;
         private readonly IRepository<Genre> _genreRepository;
         private readonly IUriComposer _uriComposer;
+        private readonly ILogger<CatalogViewModelService> _logger;
 
         public CatalogViewModelService(
             IRepository<Product> productRepository,
             IRepository<Genre> genreRepository,
-            IUriComposer uriComposer)
+            IUriComposer uriComposer,
+            ILogger<CatalogViewModelService> logger)
         {
             _productRepository = productRepository;
             _genreRepository = genreRepository;
             _uriComposer = uriComposer;
+            _logger = logger;
         }
 
         public async Task<CatalogIndexViewModel> GetCatalogItems(int pageIndex, int itemsPage, int? genreId)
         {
-            //_logger.LogInformation("GetCatalogItems called.");
+            _logger.LogInformation("GetCatalogItems called.");
 
             var filterSpecification = new CatalogFilterSpecification(genreId);
             var filterPaginatedSpecification =
@@ -63,7 +67,7 @@ namespace Web.Services
 
         public async Task<IEnumerable<SelectListItem>> GetGenres()
         {
-           // _logger.LogInformation("GetTypes called.");
+            _logger.LogInformation("GetGenres called.");
             var genres = await _genreRepository.ListAsync();
 
             var items = genres

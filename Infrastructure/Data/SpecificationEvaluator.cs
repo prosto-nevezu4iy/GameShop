@@ -24,7 +24,7 @@ namespace Infrastructure.Data
             else if (specification.OrderByDescending != null)
                 query = query.OrderByDescending(specification.OrderByDescending);
 
-            // Apply paging if enabled
+            // Apply paging if enabled  
             if (specification.isPagingEnabled)
             {
                 query = query.Skip(specification.Skip)

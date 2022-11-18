@@ -1,6 +1,7 @@
 ﻿using ApplicationCore.Entities.BasketAggregate;
 using ApplicationCore.Interfaces;
 using ApplicationCore.Specifications;
+using Ardalis.GuardClauses;
 using Ardalis.Result;
 
 namespace ApplicationCore.Services
@@ -31,28 +32,29 @@ namespace ApplicationCore.Services
             return basket;
         }
 
-        public Task DeleteBasketAsync(int basketId)
+        public async Task DeleteBasketAsync(int basketId)
         {
-            throw new NotImplementedException();
+            var basket = await _basketRepository.GetByIdAsync(basketId);
+            Guard.Against.Null(basket, nameof(basket));
+            await _basketRepository.DeleteAsync(basket);
         }
 
-        public async Task<Result<Basket>> SetQuantities(int basketId, Dictionary<string, byte> quantities)
+        public async Task SetQuantities(int basketId, Dictionary<string, byte> quantities)
         {
             var basketSpec = new BasketWithItemsSpecification(basketId);
             var basket = await _basketRepository.FirstOrDefaultAsync(basketSpec);
-            if (basket == null) return Result<Basket>.NotFound();
+            if (basket == null) return;
 
             foreach (var item in basket.Items)
             {
                 if (quantities.TryGetValue(item.Id.ToString(), out var quantity))
                 {
-                    //if (_logger != null) _logger.LogInformation($"Updating quantity of item ID:{item.Id} to {quantity}.");
                     item.SetQuantity(quantity);
                 }
             }
+
             basket.RemoveEmptyItems();
             await _basketRepository.UpdateAsync(basket);
-            return basket;
         }
 
         public async Task TransferBasketAsync(string anonymousId, string userId)

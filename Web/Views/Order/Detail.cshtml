@@ -1,0 +1,61 @@
+﻿@model OrderViewModel
+@{
+    ViewData["Title"] = "Order Detail";
+}
+
+<div class="container px-4 px-lg-5">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Order number</th>
+                <th scope="col">Date</th>
+                <th scope="col">Total</th>
+                <th scope="col">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">@Model.OrderNumber</th>
+                <td>@Model.OrderDate</td>
+                <td>@Model.Total.ToString("N2")</td>
+                <td>@Model.Status</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p>Shipping Address</p>
+
+    <ul class="list-group mb-3">
+        <li class="list-group-item">@Model.ShippingAddress.Street</li>
+        <li class="list-group-item">@Model.ShippingAddress.City</li>
+        <li class="list-group-item">@Model.ShippingAddress.Country</li>
+    </ul>
+
+    <p>Order Details</p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Image</th>
+                <th scope="col">ProductName</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Total Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.OrderItems) 
+            {
+                <tr>
+                    <th scope="row">
+                        <img class="cropped-image img-thumbnail" src="@item.PictureUrl">
+                    </th>
+                    <td>@item.ProductName</td>
+                    <td>$ @item.UnitPrice.ToString("N2")</td>
+                    <td>@item.Units</td>
+                    <td>$ @Math.Round(item.Units * item.UnitPrice, 2).ToString("N2")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
