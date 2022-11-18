@@ -1,17 +1,16 @@
-﻿using ApplicationCore.Interfaces;
-using Ardalis.GuardClauses;
-using System.Net;
+﻿using ApplicationCore.Extensions;
+using ApplicationCore.Interfaces;
 
 namespace ApplicationCore.Entities.OrderAggregate
 {
     public class Order : BaseEntity, IAggregateRoot
     {
-        #pragma warning disable CS8618 // Required by Entity Framework
+        // Required by Entity Framework
         private Order() { }
 
         public Order(Guid buyerId, Address shipToAddress, List<OrderItem> items)
         {
-            Guard.Against.NullOrEmpty(buyerId, nameof(buyerId));
+            buyerId.AssertNotEmpty(nameof(buyerId));
 
             BuyerId = buyerId;
             ShipToAddress = shipToAddress;

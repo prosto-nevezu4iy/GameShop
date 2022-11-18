@@ -1,5 +1,5 @@
-﻿using ApplicationCore.Interfaces;
-using Ardalis.GuardClauses;
+﻿using ApplicationCore.Extensions;
+using ApplicationCore.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Web.Interfaces;
@@ -21,7 +21,7 @@ namespace Web.Controllers
         [HttpGet]
         public async Task<IActionResult> MyOrders()
         {
-            Guard.Against.Null(_currentUserService.Id, nameof(_currentUserService.Id));
+            _currentUserService.AssertNotNull(nameof(_currentUserService.Id));
 
             var viewModel = await _orderViewModelService.GetOrders(Guid.Parse(_currentUserService.Id));
 
@@ -31,7 +31,7 @@ namespace Web.Controllers
         [HttpGet("Order/Detail/{orderId}")]
         public async Task<IActionResult> Detail(int orderId)
         {
-            Guard.Against.Null(_currentUserService.Id, nameof(_currentUserService.Id));
+            _currentUserService.AssertNotNull(nameof(_currentUserService.Id));
 
             var viewModel = await _orderViewModelService.GetOrderDetails(orderId);
 

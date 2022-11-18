@@ -1,8 +1,7 @@
 ﻿using ApplicationCore.Entities.BasketAggregate;
+using ApplicationCore.Extensions;
 using ApplicationCore.Interfaces;
 using ApplicationCore.Specifications;
-using Ardalis.GuardClauses;
-using Ardalis.Result;
 
 namespace ApplicationCore.Services
 {
@@ -35,7 +34,7 @@ namespace ApplicationCore.Services
         public async Task DeleteBasketAsync(int basketId)
         {
             var basket = await _basketRepository.GetByIdAsync(basketId);
-            Guard.Against.Null(basket, nameof(basket));
+            basket.AssertNotNull(nameof(basket));
             await _basketRepository.DeleteAsync(basket);
         }
 

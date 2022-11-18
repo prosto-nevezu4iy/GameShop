@@ -1,4 +1,4 @@
-﻿using Ardalis.GuardClauses;
+﻿using ApplicationCore.Extensions;
 
 namespace ApplicationCore.Entities.BasketAggregate
 {
@@ -17,14 +17,14 @@ namespace ApplicationCore.Entities.BasketAggregate
 
         public void AddQuantity(byte quantity)
         {
-            Guard.Against.OutOfRange(quantity, nameof(quantity), 0, byte.MaxValue);
+            quantity.AssertOutOfRange(nameof(quantity), byte.MinValue, byte.MaxValue);
 
             Quantity += quantity;
         }
 
         public void SetQuantity(byte quantity)
         {
-            Guard.Against.OutOfRange(quantity, nameof(quantity), 0, byte.MaxValue);
+            quantity.AssertOutOfRange(nameof(quantity), byte.MinValue, byte.MaxValue);
 
             Quantity = quantity;
         }

@@ -4,7 +4,6 @@ using ApplicationCore.Entities.OrderAggregate;
 using ApplicationCore.Extensions;
 using ApplicationCore.Interfaces;
 using ApplicationCore.Specifications;
-using Ardalis.GuardClauses;
 
 namespace ApplicationCore.Services
 {
@@ -32,8 +31,8 @@ namespace ApplicationCore.Services
             var basketSpec = new BasketWithItemsSpecification(basketId);
             var basket = await _basketRepository.FirstOrDefaultAsync(basketSpec);
 
-            Guard.Against.Null(basket, nameof(basket));
-            Guard.Against.EmptyBasketOnCheckout(basket.Items);
+            basket.AssertNotNull(nameof(basket));
+            basket.Items.EmptyBasketOnCheckout();
 
             var productsSpecification = new ProductsSpecification(basket.Items.Select(item => item.ProductId).ToArray());
             var products = await _productRepository.ListAsync(productsSpecification);

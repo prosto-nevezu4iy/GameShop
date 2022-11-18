@@ -1,5 +1,5 @@
-﻿using ApplicationCore.Interfaces;
-using Ardalis.GuardClauses;
+﻿using ApplicationCore.Extensions;
+using ApplicationCore.Interfaces;
 
 namespace ApplicationCore.Entities
 {
@@ -32,9 +32,9 @@ namespace ApplicationCore.Entities
 
         public void UpdateDetails(CatalogItemDetails details)
         {
-            Guard.Against.NullOrEmpty(details.Name, nameof(details.Name));
-            Guard.Against.NullOrEmpty(details.Description, nameof(details.Description));
-            Guard.Against.NegativeOrZero(details.Price, nameof(details.Price));
+            details.Name.AssertNotEmpty(nameof(details.Name));
+            details.Description.AssertNotEmpty(nameof(details.Description));
+            details.Price.AssertNegativeOrZero(nameof(details.Price));
 
             Name = details.Name;
             Description = details.Description;
@@ -43,7 +43,7 @@ namespace ApplicationCore.Entities
 
         public void UpdateGenre(int genreId)
         {
-            Guard.Against.Zero(genreId, nameof(genreId));
+            genreId.AssertZero(nameof(genreId));
             GenreId = genreId;
         }
 

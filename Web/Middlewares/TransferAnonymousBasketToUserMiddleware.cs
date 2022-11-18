@@ -1,5 +1,5 @@
-﻿using ApplicationCore.Interfaces;
-using Ardalis.GuardClauses;
+﻿using ApplicationCore.Extensions;
+using ApplicationCore.Interfaces;
 
 namespace Web.Middlewares
 {
@@ -23,7 +23,7 @@ namespace Web.Middlewares
                 var anonymousId = context.Request.Cookies[Constants.BASKET_COOKIENAME];
                 if (Guid.TryParse(anonymousId, out var _))
                 {
-                    Guard.Against.NullOrEmpty(_currentUserService.Id, nameof(_currentUserService.Id));
+                    _currentUserService.AssertNotNull(nameof(_currentUserService.Id));
                     await _basketService.TransferBasketAsync(anonymousId, _currentUserService.Id);
                 }
                 context.Response.Cookies.Delete(Constants.BASKET_COOKIENAME);

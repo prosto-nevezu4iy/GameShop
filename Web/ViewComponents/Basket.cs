@@ -1,5 +1,5 @@
-﻿using ApplicationCore.Interfaces;
-using Ardalis.GuardClauses;
+﻿using ApplicationCore.Extensions;
+using ApplicationCore.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Web.Interfaces;
 using Web.ViewModels;
@@ -30,7 +30,7 @@ namespace Web.ViewComponents
         {
             if (User.Identity.IsAuthenticated)
             {
-                Guard.Against.Null(_currentUserService.Id, nameof(_currentUserService.Id));
+                _currentUserService.Id.AssertNotNull(nameof(_currentUserService.Id));
                 return await _basketService.CountTotalBasketItems(Guid.Parse(_currentUserService.Id));
             }
 

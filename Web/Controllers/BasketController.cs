@@ -1,12 +1,10 @@
 ﻿using ApplicationCore.Entities;
 using ApplicationCore.Entities.OrderAggregate;
 using ApplicationCore.Exceptions;
+using ApplicationCore.Extensions;
 using ApplicationCore.Interfaces;
-using Ardalis.GuardClauses;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
 using Web.Interfaces;
 using Web.ViewModels;
 
@@ -128,7 +126,7 @@ namespace Web.Controllers
                 var anonymousId = Request.Cookies[Constants.BASKET_COOKIENAME];
                 if (Guid.TryParse(anonymousId, out var _))
                 {
-                    Guard.Against.NullOrEmpty(userId, nameof(userId));
+                    userId.AssertNotEmpty(nameof(userId));
                     await _basketService.TransferBasketAsync(anonymousId, userId);
                 }
                 Response.Cookies.Delete(Constants.BASKET_COOKIENAME);
@@ -139,12 +137,12 @@ namespace Web.Controllers
 
         private Guid GetOrSetBasketCookieAndUserId()
         {
-            Guard.Against.Null(Request.HttpContext.User.Identity, nameof(Request.HttpContext.User.Identity));
+            Request.HttpContext.User.Identity.AssertNotNull(nameof(Request.HttpContext.User.Identity));
             Guid userId = Guid.Empty;
 
             if (Request.HttpContext.User.Identity.IsAuthenticated)
             {
-               Guard.Against.Null(_currentUserService.Id, nameof(_currentUserService.Id));
+                _currentUserService.Id.AssertNotNull(nameof(_currentUserService.Id));
                return Guid.Parse(_currentUserService.Id);
             }
 

@@ -1,12 +1,6 @@
 ﻿using ApplicationCore.Interfaces;
-using Ardalis.GuardClauses;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.OAuth;
-using Microsoft.AspNetCore.Authentication.OpenIdConnect;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualBasic;
-using System.Web;
 
 namespace Web.Controllers
 {

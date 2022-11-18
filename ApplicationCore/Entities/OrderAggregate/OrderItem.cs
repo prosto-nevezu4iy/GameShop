@@ -6,7 +6,7 @@
         public decimal UnitPrice { get; private set; }
         public byte Units { get; private set; }
 
-        #pragma warning disable CS8618 // Required by Entity Framework
+        // Required by Entity Framework
         private OrderItem() { }
 
         public OrderItem(ProductOrdered productOrdered, decimal unitPrice, byte units)
