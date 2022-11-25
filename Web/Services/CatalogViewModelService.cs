@@ -2,7 +2,6 @@
 using ApplicationCore.Interfaces;
 using ApplicationCore.Specifications;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Serilog.Core;
 using Web.Interfaces;
 using Web.ViewModels;
 

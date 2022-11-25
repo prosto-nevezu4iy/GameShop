@@ -10,7 +10,8 @@ namespace Web.Configuration
         public static IServiceCollection AddWebServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<CatalogSettings>(configuration);
-            services.AddScoped<ICatalogViewModelService, CatalogViewModelService>();
+            services.AddScoped<CatalogViewModelService>();
+            services.AddScoped<ICatalogViewModelService, CachedCatalogViewModelService>();
             services.AddScoped<IBasketViewModelService, BasketViewModelService>();
             services.AddScoped<IOrderViewModelService, OrderViewModelService>();
 
