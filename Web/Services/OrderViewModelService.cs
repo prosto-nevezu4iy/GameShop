@@ -24,7 +24,7 @@ namespace Web.Services
 
             if (order == null)
             {
-                return null;
+                return default;
             }
 
             return new OrderViewModel

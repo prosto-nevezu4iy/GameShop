@@ -1,16 +1,17 @@
 ﻿using ApplicationCore.Interfaces;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using Web.Config;
 
 namespace Web.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly IBasketService _basketService;
+        private readonly IConfiguration _configuration;
 
-        public AccountController(IBasketService basketService)
+        public AccountController(IConfiguration configuration)
         {
-            _basketService = basketService;
+            _configuration = configuration;
         }
 
         [HttpPost]
@@ -22,11 +23,9 @@ namespace Web.Controllers
 
         public IActionResult UserInfo()
         {
-            var identityUrl = "https://localhost:5002";
+            var identityConfig = _configuration.GetSection("Identity").Get<Identity>();
 
-            var redirectUrl = $"{identityUrl}/Manage";
-
-            return Redirect(redirectUrl);
+            return Redirect($"{identityConfig.Authority}/Manage");
         }
 
         public IActionResult Logout()

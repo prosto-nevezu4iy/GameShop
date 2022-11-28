@@ -113,26 +113,9 @@ namespace Web.Controllers
         }
 
         [Authorize]
-        public async Task<IActionResult> Success()
+        public IActionResult Success()
         {
             return View();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> TransferAnonymousBasket([FromBody] string userId)
-        {
-            if (Request.Cookies.ContainsKey(Constants.BASKET_COOKIENAME))
-            {
-                var anonymousId = Request.Cookies[Constants.BASKET_COOKIENAME];
-                if (Guid.TryParse(anonymousId, out var _))
-                {
-                    userId.AssertNotEmpty(nameof(userId));
-                    await _basketService.TransferBasketAsync(anonymousId, userId);
-                }
-                Response.Cookies.Delete(Constants.BASKET_COOKIENAME);
-            }
-
-            return Ok();
         }
 
         private Guid GetOrSetBasketCookieAndUserId()

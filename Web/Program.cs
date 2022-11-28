@@ -2,6 +2,7 @@ using Infrastructure;
 using Infrastructure.Data;
 using Serilog;
 using System.IdentityModel.Tokens.Jwt;
+using Web.Config;
 using Web.Configuration;
 using Web.Middlewares;
 
@@ -20,9 +21,13 @@ Dependencies.ConfigureServices(builder.Configuration, builder.Services);
 builder.Services.AddCoreServices(builder.Configuration);
 builder.Services.AddWebServices(builder.Configuration);
 
+builder.Services.AddMemoryCache();
+
 builder.Services.AddControllersWithViews();
 
 JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
+
+var identityConfig = builder.Configuration.GetSection("Identity").Get<Identity>();
 
 builder.Services.AddAuthentication(options =>
 {
@@ -32,10 +37,10 @@ builder.Services.AddAuthentication(options =>
     .AddCookie("Cookies")
     .AddOpenIdConnect("oidc", options =>
     {
-        options.Authority = "https://localhost:5002";
+        options.Authority = identityConfig.Authority;
 
-        options.ClientId = "GameShop";
-        options.ClientSecret = "49C1A7E1-0C79-4A89-A3D6-A37998FB86B0";
+        options.ClientId = identityConfig.ClientId;
+        options.ClientSecret = identityConfig.ClientSecret;
         options.ResponseType = "code";
 
         options.Scope.Add("profile");
